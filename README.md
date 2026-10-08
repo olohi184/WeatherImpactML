@@ -1,3 +1,7 @@
+
+## Live Application Preview
+![WeatherImpactML Dashboard](weatherimpactml_demo.png)
+
 # 🌤️ WeatherImpactML
 
 ### An End-to-End Machine Learning System for One-Hour Temperature Forecasting
