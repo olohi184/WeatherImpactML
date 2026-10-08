@@ -1,3 +1,4 @@
+import requests
 import json
 import joblib
 import pandas as pd
@@ -16,7 +17,24 @@ st.set_page_config(
 def load_model():
     return joblib.load(BASE / "weatherimpactml_model.joblib")
 
-model = load_model()
+model = @st.cache_resource
+def load_model():
+    model_path = BASE / "weatherimpactml_model.joblib"
+
+    if not model_path.exists():
+        url = (
+            "https://github.com/olohi184/WeatherImpactML/"
+            "releases/download/v1.0.0/weatherimpactml_model.joblib"
+        )
+
+        with requests.get(url, stream=True, timeout=120) as response:
+            response.raise_for_status()
+            with open(model_path, "wb") as f:
+                for chunk in response.iter_content(1024 * 1024):
+                    if chunk:
+                        f.write(chunk)
+
+    return joblib.load(model_path)
 
 with open(BASE / "weatherimpactml_metadata.json") as f:
     metadata = json.load(f)
