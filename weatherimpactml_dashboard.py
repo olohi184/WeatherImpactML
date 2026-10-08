@@ -73,6 +73,23 @@ div.stButton > button[kind="primary"] {
     font-weight: 750; padding: .7rem 1.5rem;
 }
 div[data-testid="stAlert"] { border-radius: 14px; }
+/* Keep the select control readable on dark and light browser themes. */
+[data-testid="stSidebar"] [data-baseweb="select"] > div {
+    background: #173957 !important;
+    border: 1px solid #46738e !important;
+    color: #ffffff !important;
+}
+[data-testid="stSidebar"] [data-baseweb="select"] span,
+[data-testid="stSidebar"] [data-baseweb="select"] input,
+[data-testid="stSidebar"] [data-baseweb="select"] svg { color: #ffffff !important; fill: #ffffff !important; }
+[data-baseweb="popover"] [role="listbox"] { background: #173957 !important; }
+[data-baseweb="popover"] [role="option"] { color: #ffffff !important; }
+[data-baseweb="popover"] [role="option"]:hover { background: #27557a !important; }
+/* Altair chart container matches the navy palette. */
+[data-testid="stVegaLiteChart"] { background: #10283f; border: 1px solid #2a4d68; border-radius: 16px; padding: 12px; }
+.footer { border-top: 1px solid #31516b; margin-top: 24px; padding: 22px 0 12px; color: #b2c9dc; font-size: .9rem; }
+.footer a { color: #70d9f2 !important; text-decoration: none; }
+
 [data-testid="stMetric"] { background: #10283f; border-radius: 12px; padding: 12px; }
 hr { border-color: #31516b; }
 </style>
@@ -202,7 +219,21 @@ if forecast and forecast["observation"] == selected:
         {"Temperature (°C)": [predicted, actual]},
         index=["Predicted", "Actual"],
     )
-    st.bar_chart(comparison, horizontal=True, color="#49cbe7")
+    import altair as alt
+    chart_data = comparison.reset_index().rename(columns={"index": "Result"})
+    chart = (
+        alt.Chart(chart_data)
+        .mark_bar(size=28, cornerRadiusEnd=5)
+        .encode(
+            x=alt.X("Temperature (°C):Q", scale=alt.Scale(zero=True), title="Temperature (°C)", axis=alt.Axis(labelColor="#c6deef", titleColor="#c6deef", gridColor="#2d4d67")),
+            y=alt.Y("Result:N", sort=["Predicted", "Actual"], title=None, axis=alt.Axis(labelColor="#dcefff")),
+            color=alt.Color("Result:N", scale=alt.Scale(domain=["Predicted", "Actual"], range=["#47c9e9", "#7c9cff"]), legend=None),
+            tooltip=["Result:N", alt.Tooltip("Temperature (°C):Q", format=".2f")],
+        )
+        .properties(height=140, background="#10283f")
+        .configure_view(stroke=None)
+    )
+    st.altair_chart(chart, use_container_width=True)
 else:
     st.markdown(
         '<p class="small-note">Generate a forecast to view the predicted temperature, '
@@ -225,5 +256,13 @@ st.markdown(
     '<p class="small-note">WeatherImpactML is an educational and research demonstration '
     'using historical Jena weather data. Predictions are not live weather forecasts. '
     'Model metrics describe performance on the held-out historical test set.</p>',
+    unsafe_allow_html=True,
+)
+
+
+st.markdown(
+    '<div class="footer"><strong>🌤️ WeatherImpactML</strong> · AI Weather Intelligence &nbsp;|&nbsp; '
+    '<a href="https://github.com/olohi184/WeatherImpactML" target="_blank">GitHub Repository ↗</a>'
+    '<p class="small-note">Historical weather forecasting research demonstration. Not a live or operational weather forecast.</p></div>',
     unsafe_allow_html=True,
 )
