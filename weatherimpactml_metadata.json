@@ -1,0 +1,23 @@
+{
+  "model_name": "Random Forest",
+  "target": "Temperature one hour ahead (degC)",
+  "feature_names": [
+    "T (degC)",
+    "p (mbar)",
+    "rh (%)",
+    "temp_lag_1",
+    "temp_lag_2",
+    "temp_lag_3",
+    "temp_lag_6",
+    "temp_lag_12",
+    "temp_lag_24"
+  ],
+  "metrics": {
+    "model": "Random Forest",
+    "MAE": 0.4039591983279648,
+    "RMSE": 0.5866688175472614,
+    "R2": 0.9943155855189436,
+    "training_samples": 59471,
+    "test_samples": 10495
+  }
+}
