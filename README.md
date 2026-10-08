@@ -107,7 +107,18 @@ The deployed application provides:
 **Deployment:** Streamlit Community Cloud
 
 ## 8. Deployment Architecture
-
+```mermaid
+flowchart TD
+    A["Historical Weather Data"] --> B["Data Preparation"]
+    B --> C["Feature Engineering"]
+    C --> D["Chronological Validation"]
+    D --> E["Model Comparison"]
+    E --> F["Random Forest Model"]
+    F --> G["GitHub Releases"]
+    G --> H["Streamlit Cloud"]
+    I["Metadata and Demo Data"] --> H
+    H --> J["Temperature Prediction Dashboard"]
+```
 Historical Weather Data → Data Preparation → Feature Engineering → Model Training and Validation → Random Forest Model → GitHub Releases → Streamlit Dashboard → User Prediction
 
 The trained model is distributed through GitHub Releases and loaded by the deployed application when required.
