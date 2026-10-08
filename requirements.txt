@@ -1,5 +1,7 @@
+
 streamlit==1.65.0
 scikit-learn==1.6.1
 pandas==2.2.3
 joblib
 numpy
+requests
