@@ -75,37 +75,42 @@ div.stButton > button[kind="primary"] {
 }
 div[data-testid="stAlert"] { border-radius: 14px; }
 
-/* Historical observation dropdown: dark background, readable white text.
-   Target the BaseWeb select itself and all nested text, overriding Streamlit's
-   sidebar-wide color and any theme-dependent light input styling. */
-[data-testid="stSidebar"] [data-testid="stSelectbox"] [data-baseweb="select"] > div,
-[data-testid="stSidebar"] [data-baseweb="select"] > div {
-    background-color: #173957 !important;
-    border: 1px solid #46738e !important;
+/* Accessible, high-contrast observation dropdown: selected value and menu. */
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] div[data-baseweb="select"],
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] div[data-baseweb="select"] > div,
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] div[role="combobox"],
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] div[aria-haspopup="listbox"] {
+    background: #153955 !important;
+    background-color: #153955 !important;
+    border-color: #4c7895 !important;
     border-radius: 10px !important;
-    color: #ffffff !important;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
 }
-[data-testid="stSidebar"] [data-baseweb="select"] *,
-[data-testid="stSidebar"] [data-baseweb="select"] input,
-[data-testid="stSidebar"] [data-baseweb="select"] [data-testid="stMarkdownContainer"] * {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] div[data-baseweb="select"] *,
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] div[role="combobox"] *,
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] span,
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] input {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
     opacity: 1 !important;
 }
-[data-testid="stSidebar"] [data-baseweb="select"] svg,
-[data-testid="stSidebar"] [data-baseweb="select"] svg * {
-    color: #ffffff !important;
-    fill: #ffffff !important;
-    stroke: #ffffff !important;
-    opacity: 1 !important;
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] svg,
+section[data-testid="stSidebar"] div[data-testid="stSelectbox"] svg * {
+    color: #e8f6ff !important;
+    fill: #e8f6ff !important;
+    stroke: #e8f6ff !important;
 }
-[data-baseweb="popover"] [role="listbox"] { background: #173957 !important; }
-[data-baseweb="popover"] [role="option"],
-[data-baseweb="popover"] [role="option"] * {
-    color: #ffffff !important;
-    -webkit-text-fill-color: #ffffff !important;
+div[data-baseweb="popover"] ul,
+div[data-baseweb="popover"] [role="listbox"] {
+    background: #153955 !important;
 }
-[data-baseweb="popover"] [role="option"]:hover { background: #27557a !important; }
+div[data-baseweb="popover"] [role="option"],
+div[data-baseweb="popover"] [role="option"] * {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+}
+div[data-baseweb="popover"] [role="option"]:hover { background: #275a7b !important; }
 
 [data-testid="stVegaLiteChart"] {
     background: #10283f; border: 1px solid #2a4d68;
@@ -304,3 +309,4 @@ st.markdown(
 )
 
 
+    
