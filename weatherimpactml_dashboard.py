@@ -298,10 +298,32 @@ st.markdown(
     unsafe_allow_html=True,
 )
 st.markdown(
-    '<div class="footer"><strong>🌤️ WeatherImpactML</strong> · AI Weather Intelligence &nbsp;|&nbsp; '
+    '<div class="footer">'
+    '<strong>🌤️ WeatherImpactML</strong> · AI Weather Intelligence'
+    '<p style="margin:12px 0 6px;color:#ffffff;">'
+    '<strong>Developed by Olohimai Juliet Michael</strong></p>'
+    '<p style="margin:0 0 10px;color:#b7d2e7;">AI/ML Researcher | Systems Engineer</p>'
     '<a href="https://github.com/olohi184/WeatherImpactML" target="_blank">GitHub Repository ↗</a>'
+    ' &nbsp;|&nbsp; '
+    '<a href="https://www.linkedin.com/in/juliet-michael/" target="_blank">LinkedIn ↗</a>'
     '<p class="small-note">Historical weather forecasting research demonstration. '
     'Not a live or operational weather forecast.</p></div>',
     unsafe_allow_html=True,
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 
