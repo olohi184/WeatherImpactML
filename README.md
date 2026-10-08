@@ -166,3 +166,48 @@ This project is released under the MIT License.
 ---
 
 **WeatherImpactML — From historical weather data to a deployed machine-learning application.**
+
+## Developer & Project Ownership
+
+**Developed by: Olohimai Juliet Michael**
+
+**Role:** Project Developer | Machine Learning Engineer | AI Researcher
+
+WeatherImpactML is an independently developed machine-learning engineering project designed and implemented by Olohimai Juliet Michael.
+
+The project demonstrates practical expertise in:
+
+- Python programming and machine-learning development
+- Weather data preprocessing and feature engineering
+- Random Forest regression and predictive modelling
+- Chronological model validation and performance evaluation
+- Model deployment using Streamlit Community Cloud
+- GitHub version control and open-source software documentation
+
+### Project Performance
+
+| Metric | Result |
+|---|---|
+| Model | Random Forest Regressor |
+| Prediction Horizon | One Hour |
+| Mean Absolute Error (MAE) | 0.404 °C |
+| Root Mean Squared Error (RMSE) | 0.587 °C |
+| R² Score | 0.9943 |
+
+*Performance metrics are based on held-out historical Jena weather data, not real-time weather forecasting.*
+
+### Project Links
+
+**Live Application:** https://weatherimpactml.streamlit.app
+
+**GitHub Repository:** https://github.com/olohi184/WeatherImpactML
+
+**Developer's GitHub Profile:** https://github.com/olohi184
+
+**Developer's LinkedIn:** https://www.linkedin.com/in/juliet-michael/
+
+### Ownership and Licensing
+
+WeatherImpactML was developed by Olohimai Juliet Michael as an independent AI and machine-learning portfolio project.
+
+The project is distributed under the MIT License. The historical weather dataset and third-party libraries remain subject to their respective licenses and attribution requirements.
