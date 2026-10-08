@@ -1,9 +1,11 @@
-import requests
+
 import json
+from pathlib import Path
+
 import joblib
 import pandas as pd
+import requests
 import streamlit as st
-from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 
@@ -15,10 +17,6 @@ st.set_page_config(
 
 @st.cache_resource
 def load_model():
-    return joblib.load(BASE / "weatherimpactml_model.joblib")
-
-model = @st.cache_resource
-def load_model():
     model_path = BASE / "weatherimpactml_model.joblib"
 
     if not model_path.exists():
@@ -27,16 +25,26 @@ def load_model():
             "releases/download/v1.0.0/weatherimpactml_model.joblib"
         )
 
-        with requests.get(url, stream=True, timeout=120) as response:
-            response.raise_for_status()
-            with open(model_path, "wb") as f:
-                for chunk in response.iter_content(1024 * 1024):
-                    if chunk:
-                        f.write(chunk)
+        with st.spinner("Downloading trained model..."):
+            with requests.get(
+                url, stream=True, timeout=120
+            ) as response:
+                response.raise_for_status()
+
+                with open(model_path, "wb") as f:
+                    for chunk in response.iter_content(
+                        chunk_size=1024 * 1024
+                    ):
+                        if chunk:
+                            f.write(chunk)
 
     return joblib.load(model_path)
 
-with open(BASE / "weatherimpactml_metadata.json") as f:
+
+with open(
+    BASE / "weatherimpactml_metadata.json",
+    encoding="utf-8"
+) as f:
     metadata = json.load(f)
 
 data = pd.read_csv(BASE / "weatherimpactml_demo.csv")
@@ -80,32 +88,39 @@ col3.metric(
 )
 
 if st.button("Generate Forecast", type="primary"):
-    input_data = pd.DataFrame(
-        [[observation[name] for name in features]],
-        columns=features
-    )
+    try:
+        model = load_model()
 
-    prediction = float(model.predict(input_data)[0])
-    actual = float(observation["actual_next_hour_c"])
+        input_data = pd.DataFrame(
+            [[observation[name] for name in features]],
+            columns=features
+        )
 
-    st.success(
-        f"Predicted Temperature: {prediction:.2f} °C"
-    )
+        prediction = float(model.predict(input_data)[0])
+        actual = float(
+            observation["actual_next_hour_c"]
+        )
 
-    col_a, col_b = st.columns(2)
+        st.success(
+            f"Predicted Temperature: {prediction:.2f} °C"
+        )
 
-    col_a.metric(
-        "Actual Next-Hour Temperature",
-        f"{actual:.2f} °C"
-    )
+        col_a, col_b = st.columns(2)
 
-    col_b.metric(
-        "Absolute Prediction Error",
-        f"{abs(actual - prediction):.2f} °C"
-    )
+        col_a.metric(
+            "Actual Next-Hour Temperature",
+            f"{actual:.2f} °C"
+        )
+
+        col_b.metric(
+            "Absolute Prediction Error",
+            f"{abs(actual - prediction):.2f} °C"
+        )
+
+    except Exception as error:
+        st.error(f"Forecast unavailable: {error}")
 
 st.divider()
-
 st.subheader("Model Performance")
 
 metrics = metadata["metrics"]
@@ -118,5 +133,6 @@ c3.metric("R²", f"{metrics['R2']:.4f}")
 
 st.caption(
     "Research and educational demonstration using "
-    "historical Jena weather data. Not a live weather forecast."
+    "historical Jena weather data. "
+    "Not a live weather forecast."
 )
